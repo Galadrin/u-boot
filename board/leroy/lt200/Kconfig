@@ -1,0 +1,12 @@
+if TARGET_LT200_PXA270
+
+config SYS_BOARD
+	default "lt200"
+
+config SYS_VENDOR
+	default "leroy"
+
+config SYS_CONFIG_NAME
+	default "lt200_pxa270"
+
+endif

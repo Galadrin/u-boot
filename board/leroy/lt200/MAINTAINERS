@@ -1,0 +1,6 @@
+LT200_PXA270 BOARD
+M:	David Pierret <david.pierret@gmail.com>
+S:	Maintained
+F:	board/leroy/lt200/
+F:	include/configs/lt200_pxa270.h
+F:	configs/lt200_pxa270_defconfig
