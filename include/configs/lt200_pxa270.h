@@ -30,7 +30,7 @@
 #define	CONFIG_ENV_OVERWRITE
 #define CONFIG_ENV_VARS_UBOOT_CONFIG
 #define CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
-#define	CONFIG_SYS_MALLOC_LEN		(128 * 1024)
+#define	CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + 1024*1024)
 #define	CONFIG_ARCH_CPU_INIT
 #define	CONFIG_BOOTCOMMAND		"tftpboot 0xa0a00000 uImage-lt200-pxa270; bootm"
 #define	CONFIG_BOOTARGS			"root=/dev/nfs rw panic=1 nfsroot=192.168.1.101:/nfsroot-lt200 mem=32M console=ttyS0,115200n8 ip=192.168.1.221:192.168.1.101::255.255.255.0::eth0:"
@@ -67,7 +67,7 @@
 #undef  CONFIG_SMC91111_EXT_PHY
 #define SMC_DEBUG                       0
 
-#define CONFIG_SMSC9303_LT
+/* #define CONFIG_SMSC9303_LT */
 #define CONFIG_SMC911X
 #define CONFIG_SMC911X_BASE             0x14000000
 #define CONFIG_SMC911X_16_BIT
@@ -206,6 +206,22 @@
 #define	CONFIG_SYS_MCATT1_VAL	0x00000000
 #define	CONFIG_SYS_MCIO0_VAL	0x00000000
 #define	CONFIG_SYS_MCIO1_VAL	0x00000000
+
+/*
+ * NAND-FLASH configuration
+ */
+#define CONFIG_SYS_MAX_NAND_DEVICE      1               /* Max number of NAND devices. */
+#define CONFIG_SYS_NAND_BASE            0x08000000      /* Chip Select 2 */
+
+/*
+ * MTD & UBI settings
+ */
+#define CONFIG_RBTREE
+#define CONFIG_CMD_MTDPARTS
+#define CONFIG_MTD_PARTITIONS
+#define CONFIG_MTD_DEVICE
+#define MTDIDS_DEFAULT          "nand0=NAND Flash partition 1"
+#define MTDPARTS_DEFAULT        "mtdparts=NAND Flash partition 1:-(ubifs)"
 
 #include "pxa-common.h"
 
