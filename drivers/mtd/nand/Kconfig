@@ -56,6 +56,18 @@ config SYS_NAND_VF610_NFC_60_ECC_BYTES
 
 endchoice
 
+config CONFIG_NAND_LT200
+	bool "Support for NAND on LT200 PXA270"
+	help
+	  This enable the driver for LT200 NAND
+
+config CONFIG_NAND_LT200_DELAY_US
+	int "nand chip delay to apply"
+	default 25
+	depends on CONFIG_NAND_LT200
+	help
+	  value applyed to chip_delay
+
 config NAND_PXA3XX
 	bool "Support for NAND on PXA3xx and Armada 370/XP/38x"
 	select SYS_NAND_SELF_INIT

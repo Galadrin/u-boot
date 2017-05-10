@@ -915,6 +915,10 @@ config TARGET_COLIBRI_PXA270
 	bool "Support colibri_pxa270"
 	select CPU_PXA
 
+config TARGET_LT200_PXA270
+        bool "Support lt200_pxa270"
+        select CPU_PXA
+
 config ARCH_UNIPHIER
 	bool "Socionext UniPhier SoCs"
 	select BOARD_LATE_INIT
@@ -1126,6 +1130,7 @@ source "board/vscom/baltos/Kconfig"
 source "board/woodburn/Kconfig"
 source "board/work-microwave/work_92105/Kconfig"
 source "board/zipitz2/Kconfig"
+source "board/leroy/lt200/Kconfig"
 
 source "arch/arm/Kconfig.debug"
 
