@@ -545,13 +545,18 @@ static int reserve_malloc(void)
 /* (permanently) allocate a Board Info struct */
 static int reserve_board(void)
 {
+debug("gd->bd = %p", gd->bd);
 	if (!gd->bd) {
+debug("gd->bd = NULL\n");
 		gd->start_addr_sp -= sizeof(bd_t);
 		gd->bd = (bd_t *)map_sysmem(gd->start_addr_sp, sizeof(bd_t));
+debug("map_sysmem check => bd = %p\n", gd->bd);
+debug("memset (%p) for a size of %d", memset, sizeof(bd_t));
 		memset(gd->bd, '\0', sizeof(bd_t));
 		debug("Reserving %zu Bytes for Board Info at: %08lx\n",
 		      sizeof(bd_t), gd->start_addr_sp);
 	}
+debug("exiting reserve_board");
 	return 0;
 }
 #endif

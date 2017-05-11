@@ -230,10 +230,12 @@ void pxa_clock_setup(void)
 	writel(CONFIG_SYS_CCCR, CCCR);
 	asm volatile("mcr	p14, 0, %0, c6, c0, 0" : : "r"(0x0b));
 
+#ifdef CONFIG_RTC
 	/* enable the 32Khz oscillator for RTC and PowerManager */
 	writel(OSCC_OON, OSCC);
 	while (!(readl(OSCC) & OSCC_OOK))
 		asm volatile("" : : : "memory");
+#endif
 }
 
 void pxa_wakeup(void)
