@@ -29,12 +29,13 @@
  */
 
 #include <common.h>
+#include <serial.h>
 #include <asm/arch/hardware.h>
 #include <asm/arch/pxa.h>
 #include <asm/arch/regs-mmc.h>
 #include <asm/arch/regs-uart.h>
-#include <dm/platdata.h>
-#include <dm/platform_data/serial_pxa.h>
+//#include <dm/platdata.h>
+//#include <dm/platform_data/serial_pxa.h>
 #include <netdev.h>
 
 DECLARE_GLOBAL_DATA_PTR;
@@ -51,9 +52,10 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int board_init(void)
 {
-	/* We have RAM, disable cache */
-	dcache_disable();
-	icache_disable();
+	arch_cpu_init();
+
+writel(0x000200, GPCR0); /* Led F1 */
+writel(0x10000, GPCR0); /* Led F2 */
 
 	/* arch number of Leroy LT200 PXA270 */
 	gd->bd->bi_arch_number = MACH_TYPE_LT200;
@@ -61,15 +63,54 @@ int board_init(void)
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = 0xa0000100;
 
+	/* pxa_serial_initialize(); */
+
 	return 0;
 }
-
 int dram_init(void)
 {
-	pxa2xx_dram_init();
         gd->ram_size = PHYS_SDRAM_1_SIZE;
         return 0;
 }
+
+#if defined(CONFIG_SYS_DRAM_TEST)
+int
+testdram(void)
+{
+        uint *pstart = (uint *) CONFIG_SYS_MEMTEST_START;
+        uint *pend = (uint *) CONFIG_SYS_MEMTEST_END;
+        uint *p;
+
+        printf("Testing DRAM from 0x%08x to 0x%08x\n",
+               CONFIG_SYS_MEMTEST_START,
+               CONFIG_SYS_MEMTEST_END);
+
+        printf("DRAM test phase 1:\n");
+        for (p = pstart; p < pend; p++)
+                *p = 0xaaaaaaaa;
+
+        for (p = pstart; p < pend; p++) {
+                if (*p != 0xaaaaaaaa) {
+                        printf("DRAM test fails at: %08x\n", (uint) p);
+                        return 1;
+                }
+        }
+
+        printf("DRAM test phase 2:\n");
+        for (p = pstart; p < pend; p++)
+                *p = 0x55555555;
+
+        for (p = pstart; p < pend; p++) {
+                if (*p != 0x55555555) {
+                        printf("DRAM test fails at: %08x\n", (uint) p);
+                        return 1;
+                }
+        }
+
+        printf("DRAM test passed.\n");
+        return 0;
+}
+#endif
 
 
 #ifdef CONFIG_SMC911X
@@ -89,7 +130,7 @@ int board_late_init(void)
 	return 0;
 }
 #endif
-
+/*
 static const struct pxa_serial_platdata serial_platdata = {
         .base = (struct pxa_uart_regs *)FFUART_BASE,
         .port = FFUART_INDEX,
@@ -100,4 +141,4 @@ U_BOOT_DEVICE(pxa_serials) = {
         .name = "serial_pxa",
         .platdata = &serial_platdata,
 };
-
+*/
