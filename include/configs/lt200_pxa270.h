@@ -30,10 +30,10 @@
 /* Avoid overwriting factory configuration block */
 #define CONFIG_BOARD_SIZE_LIMIT         0x40000
 #define BOARD_LATE_INIT
-
+/*
 #undef	CONFIG_SKIP_RELOCATE_UBOOT
 #undef	CONFIG_SKIP_LOWLEVEL_INIT
-
+*/
 /*
  * Size of malloc() pool
  */
@@ -79,7 +79,7 @@
 #define CONFIG_CONS_INDEX		3
 #define	CONFIG_BAUDRATE			115200
 #define	CONFIG_SYS_BAUDRATE_TABLE	{ 9600, 19200, 38400, 57600, 115200 }
-#define CONFIG_SILENT_CONSOLE
+#undef  CONFIG_SILENT_CONSOLE
 
 /*
  * Command line configuration.
