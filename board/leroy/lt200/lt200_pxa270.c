@@ -50,12 +50,27 @@ DECLARE_GLOBAL_DATA_PTR;
 
 /* ------------------------------------------------------------------------- */
 
+#define LED_RUN		0x00000001
+#define LED_FAIL	0x00000002
+#define LED_IO		0x00000004
+#define LED_MODE	0x00000010
+
+#define LED_F1		0x01000000
+#define LED_F2		0x00010000
+
+int debug_led_count(int cmd)
+{
+	/* settings des leds RUN, FAIL, I/O et MODE */
+	writel(((cmd & (LED_RUN | LED_FAIL)) << 20) \
+		| ((cmd & LED_IO) << 21) \
+		| ((cmd & LED_MODE) << 18), GPCR1);
+	/* Settings des leds F1 et F2 */
+	writel(((cmd & LED_F1) >> 15) | (cmd & LED_F2), GPCR0);
+	return cmd;
+}
+
 int board_init(void)
 {
-	arch_cpu_init();
-
-writel(0x000200, GPCR0); /* Led F1 */
-writel(0x10000, GPCR0); /* Led F2 */
 
 	/* arch number of Leroy LT200 PXA270 */
 	gd->bd->bi_arch_number = MACH_TYPE_LT200;
@@ -63,13 +78,14 @@ writel(0x10000, GPCR0); /* Led F2 */
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = 0xa0000100;
 
-	/* pxa_serial_initialize(); */
+	pxa_serial_initialize();
 
 	return 0;
 }
 int dram_init(void)
 {
         gd->ram_size = PHYS_SDRAM_1_SIZE;
+	pxa2xx_dram_init();
         return 0;
 }
 
