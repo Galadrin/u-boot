@@ -190,6 +190,8 @@
 #define CONFIG_SYS_DRAM_SIZE		SZ_32M			//! DRAM size (32 MB)
 #define PHYS_SDRAM_1			0xa0000000		//! SDRAM Bank #1 base address
 #define PHYS_SDRAM_1_SIZE		SZ_32M			//! SDRAM size (32 MB)
+#define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1		/* CS0 */
+#define CONFIG_SYS_SDRAM_SIZE		PHYS_SDRAM_1_SIZE	/* 64 MB DRAM */
 #define	CONFIG_SYS_INIT_SP_ADDR		0x5c010000
 
 #define CONFIG_SYS_DRAM_TEST		1
@@ -255,7 +257,6 @@
 /*
  * U-BOOT settings
  */
-#define CONFIG_DISPLAY_BOARDINFO
 #define CONFIG_AUTOBOOT_KEYED
 #ifdef CONFIG_AUTOBOOT_KEYED
 #define CONFIG_AUTOBOOT_PROMPT		"Autobooting in %2d seconds\n"
