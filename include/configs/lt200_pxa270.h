@@ -84,7 +84,6 @@
 /*
  * Command line configuration.
  */
-#define	CONFIG_CMD_DFL
 #define	CONFIG_CMD_JFFS2
 
 /*
@@ -241,7 +240,6 @@
  *
  * The stack sizes are set up in start.S using the settings below
  */
-#define	CONFIG_STACKSIZE		131072	/* regular stack: 128k */
 #ifdef	CONFIG_USE_IRQ
 #define	CONFIG_STACKSIZE_IRQ		4096	/* IRQ stack: 4k */
 #define	CONFIG_STACKSIZE_FIQ		4096	/* FIQ stack: 4k */

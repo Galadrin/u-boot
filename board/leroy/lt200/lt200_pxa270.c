@@ -78,8 +78,6 @@ int board_init(void)
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = 0xa0000100;
 
-	pxa_serial_initialize();
-
 	return 0;
 }
 int dram_init(void)
