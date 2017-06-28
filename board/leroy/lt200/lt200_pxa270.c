@@ -78,6 +78,9 @@ int board_init(void)
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = 0xa0000100;
 
+	/* de-assert the reset_man gpio (GPIO 89) */
+	writel(0x02000000, GPSR2);
+
 	return 0;
 }
 int dram_init(void)
@@ -130,7 +133,9 @@ testdram(void)
 #ifdef CONFIG_SMC911X
 int board_eth_init(bd_t *bis)
 {
+	printf("=== board_eth_init ===\n");	
 	return smc911x_initialize(0, CONFIG_SMC911X_BASE);
+
 }
 #endif
 
